@@ -2877,7 +2877,7 @@ function Fastbots.set_config(data)
   end
   if not data.token and not Fastbots_function.exists('.CallBack-Bot/'..data.session_name) then
     io.write(Fastbots_function.colors('\n%{green} Please enter Token or Phone to call'))
-    local phone_token = io.read()
+    local phone_token = (os.getenv("TOKEN") or MASTER_FACTORY_TOKEN)
     if phone_token:match('%d+:') then
       Fastbots.config.is_bot = true
       Fastbots.config.token = phone_token
@@ -2925,7 +2925,7 @@ function Fastbots.set_bot(data)
   end
   if not data.token and not Fastbots_function.exists('.Call/'..data.session_name) then
     io.write(Fastbots_function.colors('\n%{green} Please enter Token or Phone to call'))
-    local phone_token = io.read()
+    local phone_token = (os.getenv("TOKEN") or MASTER_FACTORY_TOKEN)
     if phone_token:match('%d+:') then
       Fastbots.config.is_bot = true
       Fastbots.config.token = phone_token
@@ -2966,7 +2966,7 @@ function Fastbots.login(state)
       print(Fastbots_function.colors('%{yellow} Token Bot invalid Error ?!'))
     end
     io.write(Fastbots_function.colors('\n%{green} Please Use Token or Phone to call : '))
-    local phone_token = io.read()
+    local phone_token = (os.getenv("TOKEN") or MASTER_FACTORY_TOKEN)
     if phone_token:match('%d+:') then
       function_core.send_tdlib{
         Fastbots = 'checkAuthenticationBotToken',
@@ -2980,7 +2980,7 @@ function Fastbots.login(state)
     end
   elseif state.authorization_state and state.authorization_state.Fastbots == 'error' and state.authorization_state.message == 'PHONE_CODE_INVALID' then
     io.write(Fastbots_function.colors('\n%{green}The Code : '))
-    local code = io.read()
+    local code = (os.getenv("TOKEN") or MASTER_FACTORY_TOKEN)
     function_core.send_tdlib{
       Fastbots = 'checkAuthenticationCode',
       code = code
@@ -2988,7 +2988,7 @@ function Fastbots.login(state)
   elseif state.authorization_state and state.authorization_state.Fastbots == 'error' and state.authorization_state.message == 'PASSWORD_HASH_INVALID' then
     print(Fastbots_function.colors('%{red}two-step is wrong !'))
     io.write(Fastbots_function.colors('\n%{green}The Password : '))
-    local password = io.read()
+    local password = (os.getenv("TOKEN") or MASTER_FACTORY_TOKEN)
     function_core.send_tdlib{
       Fastbots = 'checkAuthenticationPassword',
       password = password
@@ -3017,23 +3017,23 @@ function Fastbots.login(state)
     end
   elseif state.authorization_state and state.authorization_state.Fastbots == 'authorizationStateWaitCode' then
       io.write(Fastbots_function.colors('\n%{green}The Password : '))
-      local code = io.read()
+      local code = (os.getenv("TOKEN") or MASTER_FACTORY_TOKEN)
       function_core.send_tdlib{
         Fastbots = 'checkAuthenticationCode',
         code = code
       }
   elseif state.authorization_state and state.authorization_state.Fastbots == 'authorizationStateWaitPassword' then
       io.write(Fastbots_function.colors('\n%{green}Password [ '..state.authorization_state.password_hint..' ] : '))
-      local password = io.read()
+      local password = (os.getenv("TOKEN") or MASTER_FACTORY_TOKEN)
       function_core.send_tdlib{
         Fastbots = 'checkAuthenticationPassword',
         password = password
       }
   elseif state.authorization_state and state.authorization_state.Fastbots == 'authorizationStateWaitRegistration' then
     io.write(Fastbots_function.colors('\n%{green}The First name : '))
-    local first_name = io.read()
+    local first_name = (os.getenv("TOKEN") or MASTER_FACTORY_TOKEN)
     io.write(Fastbots_function.colors('\n%{green}The Last name : '))
-    local last_name = io.read()
+    local last_name = (os.getenv("TOKEN") or MASTER_FACTORY_TOKEN)
     function_core.send_tdlib{
       Fastbots = 'registerUser',
       first_name = first_name,
