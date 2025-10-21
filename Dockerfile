@@ -14,3 +14,25 @@ RUN luarocks install serpent || true
 
 EXPOSE 80
 CMD ["bash","./start.sh"]
+FROM ubuntu:22.04
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    lsb-release \
+    lua5.3 \
+    luarocks \
+    git \
+    wget \
+    unzip \
+    build-essential
+
+RUN luarocks install luasocket
+RUN luarocks install luasec
+RUN luarocks install dkjson
+RUN luarocks install serpent
+
+WORKDIR /app
+
+COPY . .
+
+CMD ["lua5.3", "Fast.lua"]
